@@ -2,12 +2,24 @@ import {useState } from 'react';
 import {ethers, toBigInt } from 'ethers';
 import { Box, Button, Flex, Input, Text} from '@chakra-ui/react';
 import roboPunksNFT from './RoboPunksNFT.json';
+import useMediaQuery from "./useMediaQuery";
 
 const roboPunksNFTAddress = '0xe0d8439711ab3eD4172a7BCcce110e88F4E6Bb65';
 
 const MainMint = ({ accounts, setAccounts }) => {
     const [mintAmount, setMintAmount] = useState(1);
     const isConnected = Boolean(accounts[0]);
+    
+    const isAboveLarge = useMediaQuery("(min-width: 1060px)");
+
+    async function connectAccount() {
+        if (window.ethereum) {
+            const accounts = await window.ethereum.request({
+                method: "eth_requestAccounts",
+            });
+            setAccounts(accounts);
+        }
+    }
 
     async function handleMint() {
         if (window.ethereum) {
@@ -43,77 +55,157 @@ const MainMint = ({ accounts, setAccounts }) => {
     }
 
     return (
-        <Flex justify="center" align="center" height="100vh" paddingBottom="150px">
-            <Box width="520px">
+        <Flex justify="center" align="center" height="100vh" paddingBottom="18%">
+            {/*<Box width='90%', '520px'></Box>*/}
+            {isAboveLarge ? (
+            <Box width='70%'>
                 <div>
-                    <Text fontSize="48px" textShadow="0 5px #000000">RoboPunks</Text>
-                    <Text fontSize="30px" 
+                    {/*<Text fontSize={['240px', '48px']} textShadow="0 5px #000000">RoboPunks</Text> */}
+                    <Text fontSize={['240px', '48px']} textShadow="0 5px #000000">RoboPunks</Text>
+                    <Text fontSize={['24px', '30px']} 
                     textShadow="0 2px 2px #000000" 
                     fontFamily="VT323">Yo Momma, mint now </Text>
                 </div>
-
-
             {isConnected ? (
                 <div>
                     <Flex align="center" justify="center">
                         <Button 
                           backgroundColor="#D6517D"
-                          borderRadius="5px"
-                          boxShadow="0px 2px 2px 1px #0F0F0F"
+                          borderRadius="10%"
+                          boxShadow="0px .3vh .3vw .1vw #0F0F0F"
                           color="white"
                           cursor="pointer"
                           fontFamily="inherit"
-                          padding="15px"
-                          marginTop="10px"
+                          padding="3%"
+                          marginTop="2%"
                           onClick={handleDecrement}>
                             -
                         </Button>
                         <Input 
                           readOnly
                           fontFamily="inherit"
-                          width="100px"
-                          height="40px"
-                          paddingLeft="19px"
-                          marginTop="10px" 
+                          width="12vw"
+                          height="3.1vh"
+                          paddingLeft="2.3%"
+                          marginTop="2%"
                           type="number" 
                           value={mintAmount} />
                         <Button 
                           backgroundColor="#D6517D"
-                          borderRadius="5px"
-                          boxShadow="0px 2px 2px 1px #0F0F0F"
+                          borderRadius="10%"
+                          boxShadow="0px .3vh .3vw .1vw #0F0F0F"
                           color="white"
                           cursor="pointer"
                           fontFamily="inherit"
-                          padding="15px"
-                          marginTop="10px" onClick={handleIncrement}>
+                          padding="3%"
+                          marginTop="2%" 
+                          onClick={handleIncrement}>
                             +
                         </Button>
                     </Flex>
                     <Button 
                           backgroundColor="#D6517D"
-                          borderRadius="5px"
-                          boxShadow="0px 2px 2px 1px #0F0F0F"
+                          borderRadius="10%"
+                          boxShadow="0px .3vh .3vw .1vw #0F0F0F"
                           color="white"
                           cursor="pointer"
                           fontFamily="inherit"
-                          padding="15px"
-                          marginTop="10px" onClick={handleMint}>
+                          padding="3%"
+                          marginTop="2%"
+                          onClick={handleMint}>
                             Mint
                     </Button>
                 </div>
             ) : (
-                <Text
-                  marginTop="70px"
-                  fontSize="30px"
-                  letterSpacing="-5.5%"
-                  fontFamily="VT323"
-                  textShadow="0 3px #000000"
-                  color="#D6517D">
-                    You must be connected to mint
-                </Text>
-            )}
-            </Box>
-        </Flex>
+                    <Button
+                      backgroundColor="#D6517D"
+                      borderRadius="5px"
+                      boxShadow="0 px 2px 2px 1px #0F0F0F"
+                      color="white"
+                      cursor="pointer"
+                      fontFamily="inherit"
+                      padding="15px"
+                      margin="0 15px"
+                      onClick={connectAccount}
+                    >
+                      Connect
+                    </Button>
+                  )}
+            </Box> ) : (
+                        <Box width='70%'>
+                        <div>
+                            <Text fontSize='30px' textShadow="0 5px #000000">RoboPunks</Text>
+                            <Text fontSize='30px' 
+                            textShadow="0 2px 2px #000000" 
+                            fontFamily="VT323">Yo Momma, mint now </Text>
+                        </div>
+                    {isConnected ? (
+                        <div>
+                            <Flex align="center" justify="center">
+                                <Button 
+                                  backgroundColor="#D6517D"
+                                  borderRadius="10%"
+                                  boxShadow="0px .3vh .3vw .1vw #0F0F0F"
+                                  color="white"
+                                  cursor="pointer"
+                                  fontFamily="inherit"
+                                  padding="3%"
+                                  marginTop="2%"
+                                  onClick={handleDecrement}>
+                                    -
+                                </Button>
+                                <Input 
+                                  readOnly
+                                  fontFamily="inherit"
+                                  width="12vw"
+                                  height="3.1vh"
+                                  paddingLeft="2.3%"
+                                  marginTop="2%"
+                                  type="number" 
+                                  value={mintAmount} />
+                                <Button 
+                                  backgroundColor="#D6517D"
+                                  borderRadius="10%"
+                                  boxShadow="0px .3vh .3vw .1vw #0F0F0F"
+                                  color="white"
+                                  cursor="pointer"
+                                  fontFamily="inherit"
+                                  padding="3%"
+                                  marginTop="2%" 
+                                  onClick={handleIncrement}>
+                                    +
+                                </Button>
+                            </Flex>
+                            <Button 
+                                  backgroundColor="#D6517D"
+                                  borderRadius="10%"
+                                  boxShadow="0px .3vh .3vw .1vw #0F0F0F"
+                                  color="white"
+                                  cursor="pointer"
+                                  fontFamily="inherit"
+                                  padding="3%"
+                                  marginTop="2%"
+                                  onClick={handleMint}>
+                                    Mint
+                            </Button>
+                        </div>
+                    ) : (
+                        <Button
+                          backgroundColor="#D6517D"
+                          borderRadius="5px"
+                          boxShadow="0 px 2px 2px 1px #0F0F0F"
+                          color="white"
+                          cursor="pointer"
+                          fontFamily="inherit"
+                          padding="15px"
+                          margin="0 15px"
+                          onClick={connectAccount}
+                        >
+                          Connect
+                        </Button>
+                      )}
+                    </Box>)}
+        </Flex> 
     );
 };
 

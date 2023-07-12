@@ -39,3 +39,18 @@ body {
   background-attachment: fixed;
   background-position: 40% 40%;
 }
+
+.hovered-text{
+  color: white
+}
+
+.hovered-text:hover{
+  color: #D6517D;
+  fill: #D6517D;
+
+}
+
+Link{
+  color: #D6517D;
+  fill: #D6517D;
+}
